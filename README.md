@@ -1,6 +1,6 @@
 # SLAYER - mayQ -
 
-[![Witches](http://img.youtube.com/vi/o0p9K1ibYIw/0.jpg)](https://www.youtube.com/watch?v=o0p9K1ibYIw)
+[![SLAYER](http://img.youtube.com/vi/o0p9K1ibYIw/0.jpg)](https://www.youtube.com/watch?v=o0p9K1ibYIw)
 
 ## 説明
 迷宮から帰還してください。<br>
