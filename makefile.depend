@@ -1,0 +1,27 @@
+crt0.rel            :   crt0.s \
+                        main.inc
+main.rel            :   main.s main.inc \
+                        bios.inc System.inc App.inc
+System.rel          :   System.s System.inc \
+                        main.inc bios.inc vdp.inc
+Math.rel            :   Math.s Math.inc
+App.rel             :   App.s App.inc \
+                        bios.inc vdp.inc System.inc Title.inc Game.inc Debug.inc
+Title.rel           :   Title.s Title.inc \
+                        bios.inc vdp.inc System.inc App.inc
+Game.rel            :   Game.s Game.inc \
+                        bios.inc vdp.inc System.inc App.inc Maze.inc Player.inc Enemy.inc Item.inc
+Maze.rel            :   Maze.s Maze.inc \
+                        bios.inc vdp.inc System.inc App.inc Game.inc Enemy.inc Item.inc
+Player.rel          :   Player.s Player.inc \
+                        bios.inc vdp.inc System.inc App.inc Game.inc Maze.inc Enemy.inc Item.inc
+Enemy.rel           :   Enemy.s Enemy.inc \
+                        bios.inc vdp.inc System.inc App.inc Game.inc Maze.inc Player.inc EnemyDefault.inc Item.inc
+EnemyDefault.rel    :   EnemyDefault.s EnemyDefault.inc \
+                        bios.inc vdp.inc System.inc App.inc Game.inc Player.inc Enemy.inc Item.inc
+Item.rel            :   Item.s Item.inc \
+                        bios.inc vdp.inc System.inc App.inc Game.inc Maze.inc Player.inc
+Debug.rel           :   Debug.s Debug.inc \
+                        bios.inc vdp.inc System.inc App.inc
+
+pattern.rel         :   pattern.s

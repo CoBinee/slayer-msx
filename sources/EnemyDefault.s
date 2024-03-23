@@ -1,0 +1,1022 @@
+; EnemyDeault.s : エネミーの初期値
+;
+
+
+; モジュール宣言
+;
+    .module Enemy
+
+; 参照ファイル
+;
+    .include    "bios.inc"
+    .include    "vdp.inc"
+    .include    "System.inc"
+    .include    "App.inc"
+    .include	"Game.inc"
+    .include    "Player.inc"
+    .include    "Enemy.inc"
+    .include    "EnemyDefault.inc"
+    .include    "Item.inc"
+
+; 外部変数宣言
+;
+
+; マクロの定義
+;
+
+
+; CODE 領域
+;
+    .area   _CODE
+
+; 定数の定義
+;
+
+; なし
+_enemyDefaultNull:
+
+    .db     ENEMY_TYPE_NULL
+    .db     ENEMY_STATE_NULL
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     ENEMY_SPRITE_OBJECT
+    .db     ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     ENEMY_MOVE_PARAM_0_NULL
+    .db     ENEMY_MOVE_PARAM_1_NULL
+    .db     ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; コウモリ
+_enemyDefaultBat::
+
+    .db     ENEMY_TYPE_BAT
+    .db     ENEMY_STATE_FREE
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x28 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_BLUE ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x1f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x04 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x03 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_VERYSLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; ゴブリン
+_enemyDefaultGoblin:
+
+    .db     ENEMY_TYPE_GOBLIN
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x2a ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_MEDIUM_GREEN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x05 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x03 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; ローグ
+_enemyDefaultRogue:
+
+    .db     ENEMY_TYPE_ROGUE
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x2c ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_CYAN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x16 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x07 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; ガーゴイル
+_enemyDefaultGargoyle:
+
+    .db     ENEMY_TYPE_GARGOYLE
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x2e ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_RED ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x1a ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x08 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_FAST
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; リーパー
+_enemyDefaultReaper:
+
+    .db     ENEMY_TYPE_REAPER
+    .db     ENEMY_STATE_STAY
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x30 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_RED ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     ENEMY_MOVE_PARAM_0_NULL
+    .db     ENEMY_MOVE_PARAM_1_NULL
+    .db     ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x0c ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x08 ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_VERYSLOW
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; リザード
+_enemyDefaultLizard:
+
+    .db     ENEMY_TYPE_LIZARD
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x32 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_GREEN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x18 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x08 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x0c ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_VERYSLOW
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; メイジ
+_enemyDefaultMage:
+
+    .db     ENEMY_TYPE_MAGE
+    .db     ENEMY_STATE_WARP
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x34 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_BLUE ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x50 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     0x1f ; ENEMY_MOVE_PARAM_3_NULL
+    .db     0x10 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x06 ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_VERYSLOW
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; スネーク
+_enemyDefaultSnake:
+
+    .db     ENEMY_TYPE_SNAKE
+    .db     ENEMY_STATE_FREE
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x36 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_GREEN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x30 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x0c ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x03 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_POISON
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; グール
+_enemyDefaultGhoul:
+
+    .db     ENEMY_TYPE_GHOUL
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x38 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_GRAY ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x40 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x10 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x06 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_SLOW
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; デーモン
+_enemyDefaultDaemon:
+
+    .db     ENEMY_TYPE_DAEMON
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x3a ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_RED ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x16 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x08 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_UNPOWER
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; スクイッド
+_enemyDefaultSquid:
+
+    .db     ENEMY_TYPE_SQUID
+    .db     ENEMY_STATE_FREE
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x3c ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_CYAN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x30 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x14 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x07 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_UNGUARD
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; ゲイザー
+_enemyDefaultGazer:
+
+    .db     ENEMY_TYPE_GAZER
+    .db     ENEMY_STATE_FREE
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x3e ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_MEDIUM_GREEN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x10 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x0e ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x03 ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_VERYVERYSLOW
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_SLEEP
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; スパイダー
+_enemyDefaultSpider:
+
+    .db     ENEMY_TYPE_SPIDER
+    .db     ENEMY_STATE_FREE
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x40 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_RED ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x1f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x10 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x0c ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x03 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_BLIND
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; ラット
+_enemyDefaultRat:
+
+    .db     ENEMY_TYPE_RAT
+    .db     ENEMY_STATE_FREE
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x42 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_GRAY ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x03 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x03 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_VERYSLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_CONFUSE
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; ミミック
+_enemyDefaultMimic:
+
+    .db     ENEMY_TYPE_MIMIC
+    .db     ENEMY_STATE_MIMIC
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x44 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_YELLOW ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     ENEMY_MOVE_PARAM_0_NULL
+    .db     ENEMY_MOVE_PARAM_1_NULL
+    .db     ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x08 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x02 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     0x06 ; ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_KEY
+    .db     ITEM_NULL
+
+; スライム
+_enemyDefaultSlime:
+
+    .db     ENEMY_TYPE_SLIME
+    .db     ENEMY_STATE_FREE
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x46 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_GREEN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x10 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x0e ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x04 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_TORCH
+    .db     ITEM_NULL
+
+; ゴーレム
+_enemyDefaultGolem:
+
+    .db     ENEMY_TYPE_GOLEM
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x48 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_RED ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x1c ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x0b ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_HAMMER
+    .db     ITEM_NULL
+
+; ゴースト
+_enemyDefaultGhost:
+
+    .db     ENEMY_TYPE_GHOST
+    .db     ENEMY_STATE_GHOST
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x4a ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_BLUE ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x40 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x10 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x04 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; リッチ
+_enemyDefaultLich:
+
+    .db     ENEMY_TYPE_LICH
+    .db     ENEMY_STATE_LICH
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x4c ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_WHITE ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x40 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x14 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x07 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; ファントム
+_enemyDefaultPhantom:
+
+    .db     ENEMY_TYPE_PHANTOM
+    .db     ENEMY_STATE_PHANTOM
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x4e ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_BLUE ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x1a ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x09 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x0d ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_VERYVERYSLOW
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; サイクロプス
+_enemyDefaultCyclops:
+
+    .db     ENEMY_TYPE_CYCLOPS
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_2x2
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_BOSS
+    .db     0x50 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_RED ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x20 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x06 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_ARROW
+
+; ゾーン
+_enemyDefaultZorn:
+
+    .db     ENEMY_TYPE_ZORN
+    .db     ENEMY_STATE_STAY
+    .db     ENEMY_FLAG_2x2
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_BOSS
+    .db     0x54 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_YELLOW ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_SLOW
+    .db     ENEMY_MOVE_CYCLE_SLOW
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     ENEMY_MOVE_PARAM_0_NULL
+    .db     ENEMY_MOVE_PARAM_1_NULL
+    .db     ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x40 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x06 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_SLOW
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x08 ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_SLOW
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_DROP
+
+; シャドウ
+_enemyDefaultShadow:
+
+    .db     ENEMY_TYPE_SHADOW
+    .db     ENEMY_STATE_WARP
+    .db     ENEMY_FLAG_2x2
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_BOSS
+    .db     0x58 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_BLUE ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x0f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     0x1f ; ENEMY_MOVE_PARAM_3_NULL
+    .db     0x64 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x08 ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_VERYFAST
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_GRASS
+
+; ドラゴン
+_enemyDefaultDragon:
+
+    .db     ENEMY_TYPE_DRAGON
+    .db     ENEMY_STATE_APPROACH
+    .db     ENEMY_FLAG_2x2
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_BOSS
+    .db     0x5c ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_DARK_GREEN ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     0x00 ; ENEMY_MOVE_PARAM_0_NULL
+    .db     0x3f ; ENEMY_MOVE_PARAM_1_NULL
+    .db     0x20 ; ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0xa8 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x0a ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     0x0c ; ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_SLOW
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_DRAGON_SLAYER
+
+; クリスタル
+_enemyDefaultCrystal::
+
+    .db     ENEMY_TYPE_CRYSTAL
+    .db     ENEMY_STATE_CRYSTAL
+    .db     ENEMY_FLAG_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_ZAKO
+    .db     0x26 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_LIGHT_YELLOW ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     ENEMY_MOVE_PARAM_0_NULL
+    .db     ENEMY_MOVE_PARAM_1_NULL
+    .db     ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0xa8 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     0x09 ; ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_FAST
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_CRYSTAL
+
+; 門
+_enemyDefaultGate:
+
+    .db     ENEMY_TYPE_GATE
+    .db     ENEMY_STATE_GATE
+    .db     ENEMY_FLAG_NOHIT
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_GATE
+    .db     0x70 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_BLACK ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_NORMAL
+    .db     ENEMY_MOVE_CYCLE_NORMAL
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     ENEMY_MOVE_PARAM_0_NULL
+    .db     ENEMY_MOVE_PARAM_1_NULL
+    .db     ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0x01 ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+; 魔法
+_enemyDefaultMagic:
+
+    .db     ENEMY_TYPE_MAGIC
+    .db     ENEMY_STATE_MAGIC
+    .db     ENEMY_FLAG_NOHITENEMY
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_POSITION_NULL
+    .db     ENEMY_DIRECTION_DOWN
+    .db     ENEMY_R_MAGIC
+    .db     0x78 ; ENEMY_SPRITE_OBJECT
+    .db     VDP_COLOR_WHITE ; ENEMY_COLOR_OBJECT
+    .db     ENEMY_COLOR_DAMAGE_HIT
+    .db     ENEMY_ANIMATION_NULL
+    .db     ENEMY_MOVE_SPEED_MAGIC
+    .db     ENEMY_MOVE_CYCLE_MAGIC
+    .db     ENEMY_MOVE_FRAME_NULL
+    .db     ENEMY_MOVE_PARAM_0_NULL
+    .db     ENEMY_MOVE_PARAM_1_NULL
+    .db     ENEMY_MOVE_PARAM_2_NULL
+    .db     ENEMY_MOVE_PARAM_3_NULL
+    .db     0xff ; ENEMY_LIFE_NULL
+    .db     ENEMY_DAMAGE_POINT_NULL
+    .db     ENEMY_DAMAGE_FRAME_NULL
+    .db     ENEMY_POWER_POINT_NULL
+    .db     ENEMY_POWER_CYCLE_NORMAL
+    .db     ENEMY_POWER_FRAME_NULL
+    .db     ENEMY_MAGIC_POINT_NULL
+    .db     ENEMY_MAGIC_CYCLE_NORMAL
+    .db     ENEMY_MAGIC_FRAME_NULL
+    .db     ENEMY_GUARD_NULL
+    .db     PLAYER_CONDITION_NULL
+    .db     ITEM_NULL
+    .db     ITEM_NULL
+
+
+; DATA 領域
+;
+    .area   _DATA
+
+; 変数の定義
+;
+

@@ -1,0 +1,185 @@
+mayQ - Game Document
+
+
+[ZAKO]
+
+ BAT      : L.1 / FREE     / PHYSICAL /         /         / 
+ GOBLIN   : L.1 / APPROACH / PHYSICAL /         / SWORD   / 
+ ROGUE    : L.3+/ APPROACH / PHYSICAL /         / SWORD   /
+ GARGOYLE : L.4 / APPROACH / PHYSICAL /         /         / 
+ REAPER   : L.2 / STAY     / MAGIC    /         / SHIELD  / 
+ LIZARD   : L.4 / APPROACH / MAGIC    /         /         / 
+ MAGE     : L.3 / WARP     / MAGIC    /         / SHIELD  / 
+ SNAKE    : L.2 / FREE     / PHYSICAL / POISON  / TORCH   / 
+ GHOUL    : L.3 / APPROACH / PHYSICAL / SLOW    / CANDLE  / 
+ DAEMON   : L.4 / APPROACH / PHYSICAL / UNPOWER /         / 
+ SQUID    : L.3+/ FREE     / PHYSICAL / UNGUARD / MIRROR  / 
+ GAZER    : L.3 / FREE     / MAGIC    / SLEEP   / HAMMER  / 
+ SPIDER   : L.2 / FREE     / PHYSICAL / BLIND   / BOOTS   / 
+ RAT      : L.1 / FREE     / PHYSICAL / CONFUSE / KEY     / 
+ MIMIC    : L.1 / STAY     / PHYSICAL /         / ------- / KEY がないと倒せない
+ SLIME    : L.2+/ FREE     / PHYSICAL /         / RING    / TORCH がないと倒せない
+ GOLEM    : L.5 / APPROACH / PHYSICAL /         /         / HAMMER がないと倒せない
+ GHOST    : L.2+/ FREE     / PHYSICAL /         / COMPASS / CANDLE がないと見えない
+ LICH     : L.3+/ FREE     / PHYSICAL /         / AMULET  / MIRROR がないと実体化しない
+ PHANTOM  : L.4+/ APPROACH / MAGIC    /         /         / CANDLE がないと見えない, MIRROR がないと実体化しない
+
+
+[BOSS]
+
+ CYCLOPS  : L.1+/ APPROACH / PHYSICAL /         / POTION  / ARROW がないと倒しても復活する
+ ZORN     : L.2+/ STAY     / MAGIC    /         / POTION  / DROP がないと倒しても復活する
+ SHADOW   : L.3+/ WARP     / MAGIC    / SLOW    / POTION  / GRASS がないと倒しても復活する
+ DRAGON   : L.4+/ APPROACH / PHYSICAL /         / CRYSTAL / DRAGON SLAYER がないと倒しても復活する
+ CRYSTAL  : L.5+/ STAY     / PHYSICAL /         /         / CRYSTAL がないと正体を現さない
+
+
+[ITEM]
+
+ SWORD         : 攻撃力が上がる
+ SHIELD        : 防御力が上がる
+ POTION        : 体力が全回復し、状態異常もクリアされる
+ BOOTS         : 移動速度が上がる
+ COMPASS       : 地図が表示される
+ KEY           : MIMIC が倒せる
+ TORCH         : SLIME が倒せる
+ HAMMER        : GOLEM が倒せる
+ CANDLE        : GHOST, PHANTOM を可視化する 
+ MIRROR        : LICH, PHANTOM を実体化させる
+ RING          : 攻撃速度が上がる
+ AMULET        : 魔法に防御力が効かない
+ ARROW         : CYCLOPS にとどめを刺す
+ DROP          : ZORN にとどめを刺す
+ GRASS         : SHADOW にとどめを刺す
+ DRAGON SLAYER : DRAGON にとどめを刺す
+ CRYSTAL       : CRYSTAL が倒せる
+
+※ MIMIC が各ボスのとどめを刺すアイテムを持っている
+
+
+[CONDITION]
+
+ POISON  : 30 秒間、2 秒毎に 2 ダメージ
+ SLOW    : 10 秒間、移動速度が 0.5 pixels/frame に低下する（BOOTS は無効）
+ UNPOWER : 10 秒間、攻撃力が 0 になる
+ UNGUARD : 10 秒間、防御力が 0 になる
+ SLEEP   : 10 秒間、行動ができなくなる
+ BLIND   : 10 秒間、自分が見えなくなる
+ CONFUSE : 10 秒間、キー入力と異なる方向へ移動する
+
+
+[MOVE]
+
+ STAY     : 移動しない
+ FREE     : P0 = rand(P1) + P2 だけランダムな方向に移動する
+ APPROACH : プレイヤの方向に、たまにランダムな方向に P0 = rand(P1) + P2 だけ移動する
+ WARP     : P0 = rand(P1) + P2 のあいだ出現し、そのあとランダムな位置に P0 = rand(P3) + 0x1e 後にワープする
+
+
+[BALANCE]
+
+          ATK DEF RNG AML 4-hit E-HP   PHY-ATK   MAG-ATK  Vslw Slow Norm Fast Vfst   
+                                                            26   19   15   10    7
+Level.1 :   1   1   -   -    32    4 /   2   3 /   4   4 /  x1   x2   x3   x4   x6 / 
+        :   2   1   -   -    32    8 /   2   3 /   4   4 /  x1   x2   x3   x4   x6 / 
+Level.2 :   3   2   -   -    31   12 /   2   3 /   5   5 /  x1   x2   x3   x4   x6 / 
+        :   4   3   -   -    31   16 /   2   4 /   5   5 /  x1   x2   x3   x4   x6 / 
+Level.3 :   4   4   o   -    19   16 /   2   6 /   6   6 /  x1   x1   x2   x3   x4 / 
+        :   5   5   o   -    19   20 /   2   7 /   6   6 /  x1   x1   x2   x3   x4 / 
+Level.4 :   6   6   o   o    19   24 /   2   8 /   6  12 /  x1   x1   x2   x3   x4 / 
+        :   7   7   o   o    19   28 /   2   9 /   6  13 /  x1   x1   x2   x3   x4 / 
+Level.5 :   7   7   o   o    19   28 /   3  10 /   7  14 /  x1   x1   x2   x3   x4 / 
+
+    0         1         2         3         4         5         6         7         8
+    012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789
+               |           |           |           |           |           |           |
+           |       |       |       |       |       |       |       |       |       |
+26                          *                         *                         *
+19                     *                  *                  *             * 
+15                *              *              *              *             *             *
+10           *         *         *         *         *         *         *         *
+ 7        *      *      *      *      *      *      *      *      *      *      *      *
+
+Level.1 : PHYSICAL
+          CONFUSE
+          SWORD x1, POTION, ARROW
+Level.2 : PHYSICAL, MAGIC
+          POISON, BLIND, CONFUSE
+          SWORD x2, SHIELD x1, POTION, KEY, DROP
+Level.3 : PHYSICAL, MAGIC
+          POISON, SLOW, UNGUARD, SLEEP, BLIND
+          SWORD x1, SHIELD x2, POTION, BOOTS, COMPASS, TORCH, RING, GRASS
+Level.4 : PHYSICAL, MAGIC
+          SLOW, UNPOWER, UNGUARD, SLEEP
+          SWORD x2, SHIELD x2, HAMMER, CANDLE, MIRROR, AMULET
+Level.5 : PHYSICAL, MAGIC
+          UNPOWER
+          DRAGON SLAYER
+
+
+[ROOM]
+
+Room.00 :    GATE
+     01 : (B)CRYSTAL
+     02 :    BAT      x4
+     03 :    BAT      x5
+     04 :    BAT      x8
+     05 :    RAT      x2 / KEY
+     06 :    RAT      x4 / KEY
+     07 :    GOBLIN   x2 / SWORD
+     08 :    MIMIC    x1 / ARROW
+     09 : (B)CYCLOPS  x1 / POTION  
+     10 :    RAT      x5 / KEY
+     11 :    GOBLIN   x4 / SWORD
+     12 :    GOBLIN   x5 / SWORD
+     13 :    REAPER   x1 / SHIELD
+     14 :    REAPER   x4 / SHIELD
+     15 :    SNAKE    x4 / TORCH
+     16 :    SPIDER   x4 / BOOTS
+     17 :    SPIDER   x5 / BOOTS
+     18 :    SLIME    x4 / RING
+     19 :    GHOST    x4 / COMPASS
+     20 :    MIMIC    x4 / DROP
+     21 : (B)ZORN     x1 / POTION
+     22 :    SNAKE    x5 / TORCH
+     23 :    SNAKE    x8 / TORCH
+     24 :    SPIDER   x8 / BOOTS
+     25 :    SLIME    x5 / RING
+     26 :    SLIME    x8 / RING
+     27 :    GHOST    x5 / COMPASS
+     28 :    GHOST    x8 / COMPASS
+     29 :    ROGUE    x5 / SWORD
+     30 :    REAPER   x5 / SHIELD
+     31 :    MAGE     x4 / SHIELD
+     32 :    GHOUL    x4 / CANDLE
+     33 :    GAZER    x4 / HAMMER
+     34 :    SQUID    x4 / MIRROR
+     35 :    LICH     x4 / AMULET
+     36 :    MIMIC    x8 / GRASS
+     37 : (B)SHADOW   x1 / POTION
+     38 :    GHOUL    x5 / CANDLE
+     39 :    GHOUL    x8 / CANDLE
+     40 :    GAZER    x5 / HAMMER
+     41 :    GAZER    x8 / HAMMER
+     42 :    SQUID    x5 / MIRROR
+     43 :    SQUID    x8 / MIRROR
+     44 :    LICH     x5 / AMULET
+     45 :    LICH     x8 / AMULET
+     46 :    ROGUE    x8 / SWORD
+     47 :    ROGUE    x9 / SWORD
+     48 :    MAGE     x5 / SHIELD
+     49 :    MAGE     x8 / SHIELD
+     50 :    GARGOYLE x5
+     51 :    GARGOYLE x8
+     52 :    LIZARD   x8
+     53 :    DAEMON   x8
+     54 :    GOLEM    x5
+     55 :    GOLEM    x8 
+     56 :    PHANTOM  x5
+     57 : (B)DRAGON   x1 / CRYSTAL
+     58 :    PHANTOM  x8
+     59 :    DAEMON   x9
+     60 :    GARGOYLE x9
+     61 :    LIZARD   x9
+     62 :    GOLEM    x9
+     63 :    MIMIC    x9 / DRAGON SLAYER
